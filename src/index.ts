@@ -9,11 +9,11 @@ async function main(){
 
   app.use(express.json());
 
-  app.get("/", (_req: Request, res: Response) => {
-    return res.send('Express Typescript and graphql on Vercel')
-  })
+  // app.get("/", (_req: Request, res: Response) => {
+  //   return res.send('Express Typescript and graphql on Vercel')
+  // })
 
-  app.use("/graphql",expressMiddleware(await createApolloGraphqlServer()));
+  app.use("/",expressMiddleware(await createApolloGraphqlServer()));
 
   app.listen(PORT,()=>console.log(`Server started at port:${PORT}`));
 
