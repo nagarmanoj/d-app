@@ -8,23 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const graphql_1 = __importDefault(require("./graphql"));
-const express4_1 = require("@apollo/server/express4");
-function main() {
+const server_1 = require("@apollo/server");
+function createApolloGraphqlServer() {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = (0, express_1.default)();
-        const PORT = process.env.PORT || 4001;
-        app.use(express_1.default.json());
-        app.get("/", (_req, res) => {
-            return res.send('Express Typescript and graphql on Vercel');
+        const gqlServer = new server_1.ApolloServer({
+            typeDefs: `
+           type Query {
+                hello:String
+           }
+        `,
+            resolvers: {
+                Query: {
+                    hello: () => `i am nagar`
+                }
+            },
         });
-        app.use("/graphql", (0, express4_1.expressMiddleware)(yield (0, graphql_1.default)()));
-        app.listen(PORT, () => console.log(`Server started at port:${PORT}`));
+        //Start gql server
+        yield gqlServer.start();
+        return gqlServer;
     });
 }
-main().catch((err) => console.log(err));
+exports.default = createApolloGraphqlServer;
