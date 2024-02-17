@@ -10,8 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("@apollo/server");
+const default_1 = require("@apollo/server/plugin/landingPage/default");
 function createApolloGraphqlServer() {
     return __awaiter(this, void 0, void 0, function* () {
+        let plugins = [];
+        if (process.env.NODE_ENV === "production") {
+            plugins = [(0, default_1.ApolloServerPluginLandingPageProductionDefault)({ embed: true, graphRef: "myGraph@prod" })];
+        }
+        else {
+            plugins = [(0, default_1.ApolloServerPluginLandingPageLocalDefault)({ embed: true })];
+        }
         const gqlServer = new server_1.ApolloServer({
             typeDefs: `
            type Query {
@@ -23,6 +31,7 @@ function createApolloGraphqlServer() {
                     hello: () => `i am nagar`
                 }
             },
+            plugins,
         });
         //Start gql server
         yield gqlServer.start();

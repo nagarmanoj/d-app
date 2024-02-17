@@ -20,10 +20,10 @@ function main() {
         const app = (0, express_1.default)();
         const PORT = process.env.PORT || 4001;
         app.use(express_1.default.json());
-        // app.get("/", (_req: Request, res: Response) => {
-        //   return res.send('Express Typescript and graphql on Vercel')
-        // })
-        app.use("/", (0, express4_1.expressMiddleware)(yield (0, graphql_1.default)()));
+        app.get("/", (_req, res) => {
+            return res.send('Express Typescript and graphql on Vercel');
+        });
+        app.use("/graphql", (0, express4_1.expressMiddleware)(yield (0, graphql_1.default)()));
         app.listen(PORT, () => console.log(`Server started at port:${PORT}`));
     });
 }
