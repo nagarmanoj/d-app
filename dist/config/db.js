@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const dbConnect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const conn = yield mongoose_1.default.connect('mongodb+srv://dhakar:Dhakar$8441066893@e-store.q7icw9s.mongodb.net/d-app');
+        const conn = yield mongoose_1.default.connect(process.env.MONGODB_URI);
         console.log("Database Connect Successfylly");
     }
     catch (error) {
